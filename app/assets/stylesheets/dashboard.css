@@ -1,0 +1,45 @@
+body{
+    padding: 0.4px;
+    margin: 0.4px;
+    font-family: sans-serif;
+}
+#container{
+    width: 100% !important;
+    height: 98.5vh;
+    margin:auto;
+}
+.main-color{
+    background: #0093D1;
+    color: white;
+    font-weight: bold;
+    font-size: 1.8em;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+#main-table{
+    border: 2px solid #0093D1;
+    borde-top: none;
+}
+#left{
+    border-left: 2px solid #0093D1;
+    width: 34%;
+    padding: 0px;
+}
+.full-width{
+    width: 100%;
+    margin: auto;
+    overflow-x: hidden;
+}
+#overall-drug-graph{
+    background: yellow;
+}
+#sites-drug-graph{
+    background: green;
+}
+
+#overall-ind-table{
+    background: lightblue;
+}
+#overall-ind-graphs{
+    background: lightseagreen;
+}

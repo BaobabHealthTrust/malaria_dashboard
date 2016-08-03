@@ -18,5 +18,3 @@
 *.yml
 *.*~
 .idea
-passenger-standalone*
-passenger_native*

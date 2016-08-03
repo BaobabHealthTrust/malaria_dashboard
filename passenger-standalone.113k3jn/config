@@ -1,0 +1,127 @@
+##############################################################
+#  Phusion Passenger Standalone uses a template file to
+#  generate an Nginx configuration file. The original template
+#  file can be found by running the following command:
+#
+#    ls $(passenger-config about resourcesdir)/templates/standalone/config.erb
+#
+#  You can create a copy of this template file and customize it
+#  to your liking. Just make sure you tell Phusion Passenger Standalone
+#  to use your template file by passing the --nginx-config-template
+#  parameter.
+#
+#  *** NOTE ***
+#  If you customize the template file, make sure you keep an eye
+#  on the original template file and merge any changes.
+#  New Phusion Passenger features may require changes to the template
+#  file.
+##############################################################
+
+
+master_process on;
+worker_processes 1;
+daemon on;
+error_log '/var/www/malaria_dashboard/log/passenger.3000.log' ;
+pid '/var/www/malaria_dashboard/tmp/pids/passenger.3000.pid';
+
+
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    log_format debug '[$time_local] $msec  "$request" $status conn=$connection sent=$bytes_sent body_sent=$body_bytes_sent';
+    include '/home/vine/.rvm/gems/ruby-2.1.2/gems/passenger-4.0.53/resources/mime.types';
+    passenger_ruby /home/vine/.rvm/gems/ruby-2.1.2/wrappers/ruby;
+    passenger_root '/var/www/malaria_dashboard/passenger-standalone.113k3jn/locations.ini';
+    passenger_abort_on_startup_error on;
+    passenger_ctl cleanup_pidfiles L3Zhci93d3cvbWFsYXJpYV9kYXNoYm9hcmQvcGFzc2VuZ2VyLXN0YW5kYWxvbmUuMTEzazNqbi90ZW1wX2Rpcl90b3VjaGVyLnBpZA==;
+    passenger_user_switching off;
+    passenger_max_pool_size 6;
+    passenger_min_instances 1;
+    
+        passenger_user vine;
+        passenger_default_user vine;
+        passenger_analytics_log_user vine;
+    
+    
+    
+    
+    
+    passenger_load_shell_envvars off;
+
+    
+
+    
+    
+    default_type application/octet-stream;
+    types_hash_max_size 2048;
+    server_names_hash_bucket_size 64;
+    client_max_body_size 1024m;
+    access_log off;
+    keepalive_timeout 60;
+    underscores_in_headers on;
+    gzip on;
+    gzip_comp_level 3;
+    gzip_min_length 150;
+    gzip_proxied any;
+    gzip_types text/plain text/css text/json text/javascript \
+        application/javascript application/x-javascript application/json \
+        application/rss+xml application/vnd.ms-fontobject application/x-font-ttf \
+        application/xml font/opentype image/svg+xml text/xml;
+    
+    
+
+    
+    
+    
+    server {
+        
+            listen 0.0.0.0:3000;
+        
+        server_name _;
+        
+            root '/var/www/malaria_dashboard/public';
+        
+        passenger_app_root '/var/www/malaria_dashboard';
+        passenger_enabled on;
+        passenger_app_env development;
+        passenger_spawn_method smart;
+        
+        
+        
+        
+        passenger_min_instances 1;
+        
+        
+        
+        
+        
+
+        # Rails asset pipeline support.
+        location ~ "^/assets/.+-[0-9a-f]{32}\..+" {
+            error_page 490 = @static_asset;
+            error_page 491 = @dynamic_request;
+            recursive_error_pages on;
+
+            if (-f $request_filename) {
+                return 490;
+            }
+            if (!-f $request_filename) {
+                return 491;
+            }
+        }
+        location @static_asset {
+            gzip_static on;
+            expires max;
+            add_header Cache-Control public;
+            add_header ETag "";
+        }
+        location @dynamic_request {
+            passenger_enabled on;
+        }
+    }
+    passenger_pre_start http://0.0.0.0:3000;
+    
+}
