@@ -31,10 +31,21 @@ body{
     overflow-x: hidden;
 }
 #overall-drug-graph{
-    background: yellow;
+    background: lightblue;
 }
 #sites-drug-graph{
-    background: green;
+    background: gray;
+    padding: 0px;
+    padding-top: 10px;
+}
+
+#sites-drug-graph-container{
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
 }
 
 #overall-ind-table{
@@ -42,4 +53,9 @@ body{
 }
 #overall-ind-graphs{
     background: lightseagreen;
+}
+.site-drug-graph{
+    width: 100%;
+    margin: 0px;
+    padding-bottom: 0px;
 }
