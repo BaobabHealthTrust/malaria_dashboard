@@ -7,14 +7,85 @@
     <tr style="width: 100%;">
 
       <td style="width:66%;margin:0px;">
-        <table id="left-table" style="width:100%;">
+        <table style="width:100%;">
           <tr>
-            <td id="overall-ind-table" class="overall-ind-table ind-table">
+            <td id="overall-ind-table" class="overall-ind-table ind-table full-width" valign="top">
+                <table id="indicators-table" style="width: 98.5%;margin: auto;">
+                    <caption>Mchinji</caption>
+                    <tr>
+                        <th colspan="2">
+
+                        </th>
+                        <th class="th">
+                        Today
+                        </th>
+                      <th class="th">
+                        Q3(Aug-Oct)
+                      </th>
+                        <th class="th">
+                        This Month
+                        </th>
+                        <th class="th">
+                        This Year
+                        </th>
+                    </tr>
+
+                  <tr>
+                    <td class="indicator" colspan="2">Reported Cases</td>
+                    <th class="today td">1000</th>
+                    <th class="month td">1000</th>
+                    <th class="quarter td">1000</th>
+                    <th class="year td">1000</th>
+                  </tr>
+                  <tr>
+                    <td class="indicator" colspan="2">Cases Sent For Test</td>
+                    <th class="today td">1000</th>
+                    <th class="month td">1000</th>
+                    <th class="quarter td">1000</th>
+                    <th class="year td">1000</th>
+                  </tr>
+
+                  <tr>
+                    <td class="indicator" colspan="2">Positivity Rate</td>
+                    <th class="today td">1000</th>
+                    <th class="month td">1000</th>
+                    <th class="quarter td">1000</th>
+                    <th class="year td">1000</th>
+                  </tr>
+
+                  <tr>
+                    <td class="indicator" colspan="2">1<sup>st</sup> Line Treatment</td>
+                    <th class="today td">1000</th>
+                    <th class="month td">1000</th>
+                    <th class="quarter td">1000</th>
+                    <th class="year td">1000</th>
+                  </tr>
+                  <tr>
+                    <td class="indicator" colspan="2">Treated Negative Cases</td>
+                    <th class="today td">1000</th>
+                    <th class="month td">1000</th>
+                    <th class="quarter td">1000</th>
+                    <th class="year td">1000</th>
+                  </tr>
+                </table>
 
             </td>
           </tr>
           <tr>
             <td id="overall-ind-graphs" class="overall-ind-graphs ind-graphs">
+
+              <table id="pie-bar" style="width:100%;">
+
+                <tr>
+                  <td id="bar" style="width: 50%;background: white">
+
+                  </td>
+                  <td id="pie" style="background: white ">
+
+                  </td>
+                </tr>
+
+              </table>
 
             </td>
           </tr>
@@ -23,7 +94,7 @@
 
       <td id="left" valign="top">
 
-        <table id="left-table" style="width:100%;">
+        <table style="width:100%;">
             <tr>
                 <td id="overall-drug-graph" class="overall-drug-graph">
 
@@ -49,6 +120,13 @@
 
     resize();
 
+
+
+
+    dashboard.pie4ReportedCases({"Reported" : 30, "Confirmed" : 70});
+
+    dashboard.barU5({"Female" : 30, "Male" : 70});
+
     dashboard.avgDrugConsumptionGraph({'Mar' : 2.5, 'Apr' : 31.4, 'May' : 17.5, 'Jun' : 19.0, 'Jul' : 13.5, 'Aug' : 37.5});
 
     numberOfSites = 5;
@@ -56,5 +134,13 @@
         loadSiteRow(i);
         dashboard.siteDrugConsumptionGraph(('Kawale ' + i), {'Mar': 2.5, 'Apr': 31.4, 'May': 17.5, 'Jun': 19.0, 'Jul': 13.5, 'Aug': 37.5}, i);
     }
+
+    //Parameters for auto scrolling
+    var	scrolling = false;
+    var height;
+    var yJump = 0.0011*window.innerHeight;
+    var scrollDelay = 2;
+
+    pageScroll();
 
 </script>
