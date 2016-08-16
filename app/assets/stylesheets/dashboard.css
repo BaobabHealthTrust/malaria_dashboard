@@ -35,9 +35,10 @@ body{
     background: lightgray;
 }
 #sites-drug-graph{
-    background: lightgray;
+    background: white;
     padding: 0px;
     padding-top: 10px;
+    border-top: 5px solid gray;
 }
 
 #sites-drug-graph-container{

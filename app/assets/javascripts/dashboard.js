@@ -26,8 +26,8 @@ function resize(){
     __$("container").style.height = 0.985 * window.innerHeight + "px";
     __$("left").style.height = (__$("container").offsetHeight - __$("header").offsetHeight) + "px";
     __$("overall-drug-graph").style.height = 0.24*(__$("container").offsetHeight - __$("header").offsetHeight ) + "px";
-    __$("sites-drug-graph").style.height = 0.74*(__$("container").offsetHeight - __$("header").offsetHeight) + "px";
-    __$("sites-drug-graph-container").style.height = 0.74*(__$("container").offsetHeight - __$("header").offsetHeight) + "px";
+    __$("sites-drug-graph").style.height = 0.73*(__$("container").offsetHeight - __$("header").offsetHeight) + "px";
+    __$("sites-drug-graph-container").style.height = 0.73*(__$("container").offsetHeight - __$("header").offsetHeight) + "px";
     __$("overall-ind-table").style.height = 0.59*(__$("container").offsetHeight - __$("header").offsetHeight ) + "px";
     __$("overall-ind-graphs").style.height = 0.385*(__$("container").offsetHeight - __$("header").offsetHeight ) + "px";
     __$("pie").style.height = 0.385*(__$("container").offsetHeight - __$("header").offsetHeight ) + "px";
@@ -98,6 +98,11 @@ function ajaxLoad(pos, animate){
             url: 'ajax_dashboard',
             success: function (data) {
                 data = JSON.parse(data);
+
+                avg_trends = data['average_dispensation_trends'];
+
+                delete data['average_dispensation_trends'];
+
                 sites = Object.keys(data);
                 pos = (pos >= sites.length) ? 0 : pos;
                 cur_site = sites[pos];
@@ -110,12 +115,11 @@ function ajaxLoad(pos, animate){
                 var months = {1 : 'Jan', 2 : 'Feb', 3 : 'Mar', 4 : 'Apr', 5 : 'May', 6 : 'Jun', 7 : 'Jul', 8 : 'Aug', 9 : 'Sep', 10 : 'Oct', 11 : 'Nov', 12 : 'Dec'};
 
                 var avg_values = {};
-                for(var i = 0; i < data['average_dispensation_trends'].length; i ++){
-                    var data_arr = data['average_dispensation_trends'][i];
-                    var year = parseInt((data_arr[0]).toString().slice(0, 4));
+                for(var i = 0; i < avg_trends.length; i ++){
+                    var data_arr = avg_trends[i];
                     var month = parseInt((data_arr[0]).toString().slice(-2));
                     var m = months[month] + ((i == 10) ? ( "'" + data_arr[0].toString().slice(2, 4)) : "");
-                    avg_values[m] = data['average_dispensation_trends'][i][1]
+                    avg_values[m] = avg_trends[i][1]
                 }
 
                 loadSiteIndicators(cur_site, data[cur_site], animate);
@@ -129,7 +133,6 @@ function ajaxLoad(pos, animate){
                     try {
                         for (var i = 0; i < dt['dispensation_trends'].length; i++) {
                             var data_arr = dt['dispensation_trends'][i];
-                            var year = parseInt((data_arr[0]).toString().slice(0, 4));
                             var month = parseInt((data_arr[0]).toString().slice(-2));
                             var m = months[month] + ((i == 10) ? ( "'" + data_arr[0].toString().slice(2, 4)) : "");
                             values[m] = dt['dispensation_trends'][i][1]
@@ -152,7 +155,7 @@ function ajaxLoad(pos, animate){
 
                 dashboard.barU5({"Female" : u5_females, "Male" : u5_males});
 
-                setTimeout(function(){ajaxLoad((pos + 1), true)}, 30000);
+                setTimeout(function(){ajaxLoad((pos + 1), true)}, 15000);
             }
         }
     );
@@ -164,7 +167,7 @@ var dashboard = (function() {
         avgDrugConsumptionGraph:function(data) {
 
             var a = data;
-
+            var i = 1;
             var keys = new Array();
             var values = new Array();
 
@@ -184,7 +187,7 @@ var dashboard = (function() {
                     enabled: false
                 },
                 title: {
-                    text: 'Average Drug Consumption',
+                    text: 'Avg Malaria Treatments',
                     x: -20, //center
                     style:{
                         fontWeight: 'bold',
@@ -192,17 +195,26 @@ var dashboard = (function() {
                     }
                 },
                 xAxis: {
+
                     categories: keys,
                     labels: {
+                        formatter: function() {
+                            i += 1;
+                            return ((i) % 2 == 0 ? this.value : '');
+                        },
                         style: {
-                            fontSize:'1.15em',
+                            fontSize:'1.2em',
                             fontWeight: 'bold'
                         }
                     }
                 },
                 yAxis: {
                     title: {
-                        text: 'Treated Cases'
+                        text: ' Treated Cases',
+                        style: {
+                            fontSize:'1.1em',
+                            fontWeight: 'bold'
+                        }
                     },
                     labels: {
                         style: {
@@ -325,10 +337,18 @@ var dashboard = (function() {
                         enabled: false
                     },
                     title: {
-                        text: 'Reported Cases',
+                        text: "Reported Cases",
                         style:{
                             fontWeight: 'bold',
                             fontSize: '2em'
+                        }
+                    },
+                    subtitle: {
+                        text: 'Today',
+                        style:{
+                            fontWeight: 'bold',
+                            fontSize: '1.5em',
+                            color: 'black'
                         }
                     },
                     tooltip: {
@@ -389,24 +409,24 @@ var dashboard = (function() {
                 var chart = new Highcharts.Chart({
                     chart: {
                         renderTo: 'bar',
-                        type: 'column',
-                        options3d: {
-                            enabled: true,
-                            alpha: 15,
-                            beta: 15,
-                            depth: 50,
-                            viewDistance: 25
-                        }
+                        type: 'column'
                     },
                     credits: {
                         enabled: false
                     },
-
                     title: {
-                        text: 'U5',
+                        text: "Under-Five Cases",
                         style:{
                             fontWeight: 'bold',
                             fontSize: '2em'
+                        }
+                    },
+                    subtitle: {
+                        text: 'This Quarter',
+                        style:{
+                            fontWeight: 'bold',
+                            fontSize: '1.5em',
+                            color: 'black'
                         }
                     },
                     plotOptions: {
