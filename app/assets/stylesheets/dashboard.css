@@ -5,7 +5,6 @@ body{
 }
 #container{
     width: 100% !important;
-    height: 98.5vh;
     margin:auto;
 }
 .main-color{
@@ -20,7 +19,7 @@ body{
 }
 #main-table{
     border: 2px solid #0093D1;
-    borde-top: none;
+    border-top: none;
 }
 #left{
     border-left: 2px solid #0093D1;
@@ -33,10 +32,10 @@ body{
     overflow-x: hidden;
 }
 #overall-drug-graph{
-    background: lightblue;
+    background: lightgray;
 }
 #sites-drug-graph{
-    background: lightblue;
+    background: lightgray;
     padding: 0px;
     padding-top: 10px;
 }
@@ -54,7 +53,9 @@ body{
 #overall-ind-table{
 }
 #overall-ind-graphs{
-    background: lightblue;
+    background: white;
+    margin: auto;
+    border-top: 2px dotted lightblue !important;
 }
 .site-drug-graph{
     width: 100%;
@@ -68,21 +69,20 @@ caption{
 }
 #indicators-table{
     border-collapse: collapse;
-    font-size: 1.2em;
     color: #193d6d;
 }
 #indicators-table th, #indicators-table td{
     border: 1px solid gray;
-    padding-left: 2px;
+    padding-left: 10px;
+    font-size: 1.2em;
     vertical-align: middle;
     box-shadow: 2px 2px 2px 1px lightgray;
-    height: 7.5vmin;
 }
 .th{
     width: 17.5%;
 }
 .td{
-    color: #666;
+    font-size: 1.25em !important;
 }
 .indicator{
     font-weight: bold;
