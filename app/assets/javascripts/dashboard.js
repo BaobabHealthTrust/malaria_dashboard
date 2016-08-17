@@ -152,6 +152,7 @@ function ajaxLoad(pos, animate){
                             var m = months[month] + ((i == 10) ? ( "'" + data_arr[0].toString().slice(2, 4)) : "");
                             values[m] = dt['dispensation_trends'][i][1]
                         }
+                        console.log(values);
                         dashboard.siteDrugConsumptionGraph(sites[j], values, sites[j]);
                     }catch(e){}
                 }
