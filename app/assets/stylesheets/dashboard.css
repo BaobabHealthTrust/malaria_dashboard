@@ -89,3 +89,14 @@ caption{
     font-weight: bold;
 
 }
+.nodata{
+    width: 99%;
+    margin:auto;
+    margin-top: 0px;
+    padding-top: 0px;
+    font-weight: bold;
+    font-size: 2em;
+    color: red;
+    text-align: center;
+    vertical-align: top;
+}

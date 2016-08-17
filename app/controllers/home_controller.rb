@@ -18,6 +18,12 @@ class HomeController < ApplicationController
       data[site.name]["data"] = JSON.parse(site_data.data)
       data[site.name]["site_code"] = site.site_code
       data[site.name]["date"] = site_data.date.to_date.to_s
+      data[site.name]['obsolete_today'] = (Date.today >  site_data.date.to_date) ? true : false
+      data[site.name]['obsolete_month'] = (Date.today.beginning_of_month <=  site_data.date.to_date &&  site_data.date.to_date <= Date.today.end_of_month) ? false : true
+      data[site.name]['obsolete_quarter'] = (Date.today.beginning_of_quarter <=  site_data.date.to_date &&  site_data.date.to_date <= Date.today.end_of_quarter) ? false : true
+      data[site.name]['obsolete_year'] = (Date.today.beginning_of_year <=  site_data.date.to_date &&  site_data.date.to_date <= Date.today.end_of_year) ? false : true
+
+
       treatments << data[site.name]["data"]["dispensation_trends"] rescue []
     end
 

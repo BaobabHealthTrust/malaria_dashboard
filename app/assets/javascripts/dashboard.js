@@ -57,7 +57,7 @@ function loadSiteRow(id){
     __$("sites-drug-graph-div").appendChild(row);
 }
 
-function loadSiteIndicators(site, data, animate){
+function loadSiteIndicators(site, data, animate, universal_data){
     data = data["data"];
     if (animate == true){
         jQuery("#overall-ind-table").fadeSlideLeft(1500);
@@ -67,6 +67,20 @@ function loadSiteIndicators(site, data, animate){
     var categories_html_ids = ["today", "month", "quarter", "year"];
 
     for(var i = 0; i < categories.length; i++){
+
+        if((categories[i] == 'Today' && universal_data[cur_site]['obsolete_today']) ||
+            (categories[i] == 'This Quarter' && universal_data[cur_site]['obsolete_quarter']) ||
+            (categories[i] == 'This Month' && universal_data[cur_site]['obsolete_month']) ||
+            (categories[i] == 'This Year' && universal_data[cur_site]['obsolete_year'])){
+            __$('reported_cases').getElementsByClassName(categories_html_ids[i])[0].innerHTML = 0;
+            __$('positives').getElementsByClassName(categories_html_ids[i])[0].innerHTML = 0;
+            __$('first_line').getElementsByClassName(categories_html_ids[i])[0].innerHTML = 0;
+            __$('treated_negatives').getElementsByClassName(categories_html_ids[i])[0].innerHTML = 0;
+            __$('malaria_in_pregnancy').getElementsByClassName(categories_html_ids[i])[0].innerHTML = 0;
+
+            continue;
+        }
+
         __$('reported_cases').getElementsByClassName(categories_html_ids[i])[0].innerHTML = data[categories[i]]['reported_cases'];
 
         __$('positives').getElementsByClassName(categories_html_ids[i])[0].innerHTML =
@@ -98,7 +112,6 @@ function ajaxLoad(pos, animate){
             url: 'ajax_dashboard',
             success: function (data) {
                 data = JSON.parse(data);
-
                 avg_trends = data['average_dispensation_trends'];
 
                 delete data['average_dispensation_trends'];
@@ -122,7 +135,7 @@ function ajaxLoad(pos, animate){
                     avg_values[m] = avg_trends[i][1]
                 }
 
-                loadSiteIndicators(cur_site, data[cur_site], animate);
+                loadSiteIndicators(cur_site, data[cur_site], animate, data);
 
                 for (var j = 0; j < sites.length; j++){
 
@@ -143,17 +156,32 @@ function ajaxLoad(pos, animate){
 
                 dashboard.avgDrugConsumptionGraph(avg_values);
 
-                var confirmed = parseInt(cur_data["Today"]['microscopy_positives']) + parseInt(cur_data["Today"]['mRDT_positives']);
+                if(data[cur_site]['obsolete_today']){
 
-                var presumed = parseInt(cur_data["Today"]['reported_cases']) - confirmed;
+                  __$("pie").innerHTML = "<div class='nodata'><br /><br /><span class='sub-title'>No Data Today</span></div>";
 
-                dashboard.pie4ReportedCases({"Presumed" : presumed, "Confirmed" :confirmed});
+                }else {
 
-                var u5_males = parseInt(cur_data["This Quarter"]['under_five_males']);
+                    var confirmed = parseInt(cur_data["Today"]['microscopy_positives']) + parseInt(cur_data["Today"]['mRDT_positives']);
 
-                var u5_females = parseInt(cur_data["This Quarter"]['under_five_females']);
+                    var presumed = parseInt(cur_data["Today"]['reported_cases']) - confirmed;
 
-                dashboard.barU5({"Female" : u5_females, "Male" : u5_males});
+                    dashboard.pie4ReportedCases({"Presumed": presumed, "Confirmed": confirmed});
+
+                }
+
+                if(data[cur_site]['obsolete_quarter']){
+
+                    __$("bar").innerHTML = "<div class='nodata'><br /><br /><span class='sub-title'>No Data This Quarter</span></div>";
+
+                }else {
+
+                    var u5_males = parseInt(cur_data["This Quarter"]['under_five_males']);
+
+                    var u5_females = parseInt(cur_data["This Quarter"]['under_five_females']);
+
+                    dashboard.barU5({"Female": u5_females, "Male": u5_males});
+                }
 
                 setTimeout(function(){ajaxLoad((pos + 1), true)}, 15000);
             }
