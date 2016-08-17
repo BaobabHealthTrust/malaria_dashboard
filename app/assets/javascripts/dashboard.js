@@ -134,7 +134,7 @@ function ajaxLoad(pos, animate){
                     var data_arr = avg_trends[i];
                     var month = parseInt((data_arr[0]).toString().slice(-2));
                     var m = months[month] + ((i == 10) ? ( "'" + data_arr[0].toString().slice(2, 4)) : "");
-                    avg_values[m] = avg_trends[i][1]
+                    avg_values[m] = parseInt(avg_trends[i][1]);
                 }
 
                 loadSiteIndicators(cur_site, data[cur_site], animate, data);
@@ -150,9 +150,9 @@ function ajaxLoad(pos, animate){
                             var data_arr = dt['dispensation_trends'][i];
                             var month = parseInt((data_arr[0]).toString().slice(-2));
                             var m = months[month] + ((i == 10) ? ( "'" + data_arr[0].toString().slice(2, 4)) : "");
-                            values[m] = dt['dispensation_trends'][i][1]
+                            values[m] = parseInt(dt['dispensation_trends'][i][1]);
                         }
-                        console.log(values);
+
                         dashboard.siteDrugConsumptionGraph(sites[j], values, sites[j]);
                     }catch(e){}
                 }
