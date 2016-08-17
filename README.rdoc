@@ -1,28 +1,30 @@
-== README
+Requirements
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+    Ruby version 2 or above
+    Rails version 2 or above
 
-Things you may want to cover:
+Clone the application from github
+    git clone https://github.com/BaobabHealthTrust/malaria_dashboard.git
 
-* Ruby version
+Include or exclude sites in db/seed.rb
+The ip_addresses have to point to OPD applications
+    nano db/seed.rb
 
-* System dependencies
+Setup database parameters in config/database.yml, if database does not exist run command
+    cp config/database.yml.example config/database.yml
 
-* Configuration
+Install gems with command
+    bundle install --local
 
-* Database creation
+Run database migrations  using the following commands
+    RAILS_ENV=development bundle exec rake db:create
+    RAILS_ENV=development bundle exec rake db:migrate
+    RAILS_ENV=development bundle exec rake db:seed
 
-* Database initialization
+Activate cronjobs to pull data from sites at 15 minutes interval
+    RAILS_ENV=development bundle exec whenever -i
 
-* How to run the test suite
+setup the application in nginx
 
-* Services (job queues, cache servers, search engines, etc.)
+You are good to go!
 
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
