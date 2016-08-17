@@ -48,7 +48,7 @@ body{
     margin-right: -20px !important;
     overflow-y: auto;
     overflow-x: hidden;
-
+    overflow: hidden;
 }
 
 #overall-ind-table{

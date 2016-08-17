@@ -101,7 +101,9 @@ function loadSiteIndicators(site, data, animate, universal_data){
     }
 
     if (animate == true){
+
        jQuery("#overall-ind-table").fadeSlideRight(1500);
+
     }
 
 }
