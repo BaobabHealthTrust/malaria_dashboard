@@ -1,2 +1,2 @@
-class PullTracker < ActiveRecord::Base
+class PullTracker < CouchRest::Model::Base
 end

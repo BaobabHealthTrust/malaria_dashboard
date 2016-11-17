@@ -1,2 +1,2 @@
-class Site < ActiveRecord::Base
+class Site < CouchRest::Model::Base
 end
