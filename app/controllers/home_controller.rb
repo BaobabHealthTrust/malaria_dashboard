@@ -5,12 +5,12 @@ class HomeController < ApplicationController
   end
 
   def ajax_dashboard
-
     data = {}
     average_trends = []
     treatments = []
 
-    Site.all.each do|site|
+    Site.by_name.all.each do|site|
+
       site_data = PullTracker.find_by_sql("SELECT * FROM pull_trackers
                     WHERE site_id = #{site.id} AND status = 'Success' ORDER BY id DESC LIMIT 1").last
       next if site_data.blank?

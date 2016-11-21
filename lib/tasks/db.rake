@@ -60,7 +60,7 @@ namespace :db do
 			district =  site[:district]
 			ip_address =  site[:ip_address]
 
-			system "curl -H \"Content-type:application/json\" -d '{\"name\": \"#{name}\",\"site_code\": \"#{site_code}\",\"district\": \"#{district}\",\"ip_address\": \"#{ip_address}\"}' -X POST #{url} "
+			Site.add_site(name,site_code,district,ip_address)
 		end
 	end
 end

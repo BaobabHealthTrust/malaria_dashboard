@@ -1,7 +1,7 @@
 namespace :dashboard do
   desc "TODO"
   task get_data: :environment do
-    Site.all.each do |site|
+    Site.by_name.all.each do |site|
       puts "Querying data for site: #{site.name}"
       url = "#{site.ip_address}/api/malaria_dashboard"
       json_data = RestClient.get(url) rescue ""
@@ -13,7 +13,9 @@ namespace :dashboard do
           data: json_data
       )
 =end
-      system "curl -H \"Content-type:application/json\" -d \"#{json_data}\" -X POST #{url} "
+      PullTracker.add_site(site.id, (json_data.blank? ? 'Fail' : 'Success'), Date.today, json_data)
+
+      #system "curl -H \"Content-type:application/json\" -d \"#{json_data}\" -X POST #{url} "
     end
   end
 end
