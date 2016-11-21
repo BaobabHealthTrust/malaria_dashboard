@@ -9,10 +9,10 @@ class HomeController < ApplicationController
     average_trends = []
     treatments = []
 
-    Site.by_name.all.each do|site|
+    Site.by_status.key('Success').each do|site|
 
-      site_data = PullTracker.find_by_sql("SELECT * FROM pull_trackers
-                    WHERE site_id = #{site.id} AND status = 'Success' ORDER BY id DESC LIMIT 1").last
+      site_data = site#PullTracker.find_by_sql("SELECT * FROM pull_trackers
+                    #WHERE site_id = #{site.id} AND status = 'Success' ORDER BY id DESC LIMIT 1").last
       next if site_data.blank?
       data[site.name] = {}
       data[site.name]["data"] = JSON.parse(site_data.data)

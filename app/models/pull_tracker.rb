@@ -9,11 +9,9 @@ class PullTracker < CouchRest::Model::Base
 	property :data, String
 
 	design do
-		view :by_id_and_status_success,
+		view :by_status,
 		     :map => "function(doc) {
-					if(doc['_id'] != ''){
-						emit([doc['status']], 1);
-					}
+						emit(doc['status']);
                 }"
 
 	end
