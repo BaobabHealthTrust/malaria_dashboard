@@ -9,14 +9,18 @@ class HomeController < ApplicationController
     average_trends = []
     treatments = []
 
-    Site.by_name.each do|site|
+    sites = Site.by_name.each
+
+    sites.each do|site|
 
       #site_data = PullTracker.by_status.key('Success').first #PullTracker.find_by_sql("SELECT * FROM pull_trackers
                     #WHERE site_id = #{site.id} AND status = 'Success' ORDER BY id DESC LIMIT 1").last
-      site_data = Site.by_name.key(site.name).last
+      site_data = JSON.parse(site.data) rescue nil
       next if site_data.blank?
       data[site.name] = {}
-      data[site.name]["data"] = JSON.parse(site_data.data)
+      #Rails.logger.debug JSON.parse(site_data).inspect
+      data[site.name]["data"] = site_data
+
       data[site.name]["site_code"] = site.site_code
       data[site.name]["date"] = site_data.date.to_date.to_s
       data[site.name]['obsolete_today'] = (Date.today >  site_data.date.to_date) ? true : false

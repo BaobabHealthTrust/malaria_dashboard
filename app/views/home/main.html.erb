@@ -127,7 +127,7 @@
     var yJump = 0.0011*window.innerHeight;
     var scrollDelay = 2;
 
-    jQuery.ajax(
+    a = jQuery.ajax(
             {
                 url: 'ajax_dashboard',
                 success: function (data) {
@@ -144,6 +144,7 @@
                 }
             }
     );
+        console.log(a);
 
 
 </script>

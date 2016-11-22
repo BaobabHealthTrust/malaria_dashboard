@@ -1,6 +1,6 @@
 class Site < CouchRest::Model::Base
 
-	use_database 'malaria_dashboard_data_development'
+	use_database 'data'
 
 	property :name, String
 	property :site_code, String
@@ -10,13 +10,8 @@ class Site < CouchRest::Model::Base
 	property :date, Date
 
 	design do
-		view :by_name,
-		     :map => "function(doc) {
-                     if(doc['name'] != null){
-						emit(doc['name']);
-					 }
-                }"
-
+		view :by_name
+		view :by__id
 	end
 
 	def self.add_site(name,site_code,district,ip_address)
