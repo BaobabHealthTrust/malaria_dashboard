@@ -11,8 +11,9 @@ class HomeController < ApplicationController
 
     Site.by_name.each do|site|
 
-      site_data = PullTracker.by_status.key('Success').first #PullTracker.find_by_sql("SELECT * FROM pull_trackers
+      #site_data = PullTracker.by_status.key('Success').first #PullTracker.find_by_sql("SELECT * FROM pull_trackers
                     #WHERE site_id = #{site.id} AND status = 'Success' ORDER BY id DESC LIMIT 1").last
+      site_data = Site.by_name.key(site.name).last
       next if site_data.blank?
       data[site.name] = {}
       data[site.name]["data"] = JSON.parse(site_data.data)
