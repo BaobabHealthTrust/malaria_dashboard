@@ -1,0 +1,4 @@
+PATH="/home/jacob/.rbenv/plugins/ruby-build/bin:/home/jacob/.rbenv/shims:/home/jacob/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin"
+*/1 * * * * cd /var/www/malaria_dashboard/ && bundle exec rake dashboard:get_data >> ~/errs.txt
+
+*/1 * * * * curl -X POST  http://127.0.0.1:5984/_replicate -d '{"source":"http://admin:v1nt4ge.@localhost:5984/malaria_dashboard_site_data_development","target":"http://admin:v1nt4ge.@localhost:5984/malaria_dashboard_data_development", "continuous":false}' -H "Content-Type: application/json" >> ~/errp.txt
