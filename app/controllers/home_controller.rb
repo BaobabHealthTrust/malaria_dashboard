@@ -8,23 +8,32 @@ class HomeController < ApplicationController
     data = {}
     average_trends = []
     treatments = []
-
-    sites = Site.by_name.each
-
-    sites.each do|site|
-      site_data = eval(site.data)
-      next if site_data.blank?
-      data[site.name] = {}
-      data[site.name]["data"] = site_data
-      data[site.name]["site_code"] = site.site_code
-      data[site.name]["date"] = site.date.to_date.to_s
-      data[site.name]['obsolete_today'] = (Date.today >  site.date.to_date) ? true : false
-      data[site.name]['obsolete_month'] = (Date.today.beginning_of_month <=  site.date.to_date &&  site.date.to_date <= Date.today.end_of_month) ? false : true
-      data[site.name]['obsolete_quarter'] = (Date.today.beginning_of_quarter <=  site.date.to_date &&  site.date.to_date <= Date.today.end_of_quarter) ? false : true
-      data[site.name]['obsolete_year'] = (Date.today.beginning_of_year <=  site.date.to_date &&  site.date.to_date <= Date.today.end_of_year) ? false : true
+    skip_list = []
 
 
-      treatments << data[site.name]["data"]["dispensation_trends"] rescue []
+    annual_trail = PullTracker.by_date.startkey((Date.today - 1.year).strftime("%Y%m%d")).endkey(Date.today.strftime("%Y%m%d"))
+    annual_trail.each do|hash|
+      site_code = hash['site_code']
+      next if skip_list.include?(site_code)
+
+      last_data = PullTracker.by_site_code_and_date.startkey(site_code + "__" + (Date.today - 1.year).strftime("%Y%m%d"))
+      .endkey(site_code + "__" + Date.today.strftime("%Y%m%d")).last
+      next if last_data.blank?
+      site_name = hash['site_name']
+      date = hash['date']
+
+      data[site_name] = {}
+      data[site_name]["data"] = eval(last_data["data"].gsub(/\\\"/, "'")) rescue last_data["data"]
+      data[site_name]["site_code"] = hash["site_code"]
+      data[site_name]["date"] = date.to_date
+      data[site_name]['obsolete_today'] = (Date.today >  date.to_date) ? true : false
+      data[site_name]['obsolete_month'] = (Date.today.beginning_of_month <=  date.to_date &&  date.to_date <= Date.today.end_of_month) ? false : true
+      data[site_name]['obsolete_quarter'] = (Date.today.beginning_of_quarter <=  date.to_date &&  date.to_date <= Date.today.end_of_quarter) ? false : true
+      data[site_name]['obsolete_year'] = (Date.today.beginning_of_year <= date.to_date &&  date.to_date <= Date.today.end_of_year) ? false : true
+
+      treatments << data[site_name]["data"]["dispensation_trends"] rescue []
+
+      skip_list << site_code
     end
 
 

@@ -134,7 +134,7 @@
                     data = JSON.parse(data);
                     sites = Object.keys(data);
                     cur_site = sites[0];
-
+                    console.log(data[cur_site]['data']);
                     resize();
 
                     ajaxLoad(0, false);
