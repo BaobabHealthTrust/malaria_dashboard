@@ -1,0 +1,18 @@
+development: &development
+  protocol: 'http'
+  host: localhost 
+  port: 5984
+  prefix: central
+  suffix: dashboard
+  username: root
+  password: password
+  facility_code: 15
+  district_code: LL
+test:
+  <<: *development
+  suffix: test
+
+production:
+  <<: *development
+  protocol: 'http'
+  suffix: development
