@@ -67,7 +67,6 @@ function loadSiteIndicators(site, data, animate, universal_data){
     var categories_html_ids = ["today", "month", "quarter", "year"];
 
     for(var i = 0; i < categories.length; i++){
-
         if((categories[i] == 'Today' && universal_data[cur_site]['obsolete_today']) ||
             (categories[i] == 'This Quarter' && universal_data[cur_site]['obsolete_quarter']) ||
             (categories[i] == 'This Month' && universal_data[cur_site]['obsolete_month']) ||
@@ -81,6 +80,7 @@ function loadSiteIndicators(site, data, animate, universal_data){
             continue;
         }
 
+        console.log(categories[i]);
         __$('reported_cases').getElementsByClassName(categories_html_ids[i])[0].innerHTML = data[categories[i]]['reported_cases'];
 
         __$('positives').getElementsByClassName(categories_html_ids[i])[0].innerHTML =

@@ -19,12 +19,12 @@ class HomeController < ApplicationController
       last_data = PullTracker.by_site_code_and_date.startkey(site_code + "__" + (Date.today - 1.year).strftime("%Y%m%d"))
       .endkey(site_code + "__" + Date.today.strftime("%Y%m%d")).last
       next if last_data.blank?
-      site_name = hash['site_name']
-      date = hash['date']
+      site_name = last_data['site_name']
+      date = last_data['date']
 
       data[site_name] = {}
       data[site_name]["data"] = eval(last_data["data"].gsub(/\\\"/, "'")) rescue last_data["data"]
-      data[site_name]["site_code"] = hash["site_code"]
+      data[site_name]["site_code"] = last_data["site_code"]
       data[site_name]["date"] = date.to_date
       data[site_name]['obsolete_today'] = (Date.today >  date.to_date) ? true : false
       data[site_name]['obsolete_month'] = (Date.today.beginning_of_month <=  date.to_date &&  date.to_date <= Date.today.end_of_month) ? false : true
