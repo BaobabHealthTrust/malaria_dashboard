@@ -80,7 +80,6 @@ function loadSiteIndicators(site, data, animate, universal_data){
             continue;
         }
 
-        console.log(categories[i]);
         __$('reported_cases').getElementsByClassName(categories_html_ids[i])[0].innerHTML = data[categories[i]]['reported_cases'];
 
         __$('positives').getElementsByClassName(categories_html_ids[i])[0].innerHTML =
