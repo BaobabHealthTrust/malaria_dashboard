@@ -166,7 +166,7 @@ function ajaxLoad(pos, animate){
 
                     var confirmed = parseInt(cur_data["Today"]['microscopy_positives']) + parseInt(cur_data["Today"]['mRDT_positives']);
 
-                    var presumed = parseInt(cur_data["Today"]['reported_cases']) - confirmed;
+                    var presumed = parseInt(cur_data["Today"]['presumed_and_confirmed']) - confirmed;
 
                     dashboard.pie4ReportedCases({"Presumed": presumed, "Confirmed": confirmed});
 
